@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import RadioButtons from "../radio-buttons/RadioButtons";
+import styles from "./Filter.module.css";
 
 const Filter = ({ setSearchValue, setSearchCondition }) => {
   const [inputValue, setInputValue] = useState("");
@@ -15,7 +16,7 @@ const Filter = ({ setSearchValue, setSearchCondition }) => {
   }
 
   return (
-    <div>
+    <div className={styles.filter}>
       <button type="button" onClick={(e) => handleClick()}>
         Фильтровать +
       </button>
@@ -25,7 +26,7 @@ const Filter = ({ setSearchValue, setSearchCondition }) => {
           <RadioButtons setSearchCondition={setSearchCondition} />
           <div>
             <input
-              // className="form-control"
+              className="form-control"
               placeholder="Search here"
               type="text"
               value={inputValue}
