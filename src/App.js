@@ -53,9 +53,11 @@ const App = () => {
   return (
     <div className="container mt-5">
       <Title />
+
       <button type="button" onClick={(e) => setHidden(!hidden)}>
         Фильтровать +
       </button>
+
       {!hidden ? (
         <>
           <RadioButtons
@@ -66,7 +68,9 @@ const App = () => {
           <Filter setSearchValue={setSearchValue} />{" "}
         </>
       ) : null}
+
       {error && <h1>Произошла ошибка ${error}</h1>}
+
       {isLoading ? (
         <div
           style={{
