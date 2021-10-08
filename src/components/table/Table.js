@@ -1,6 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { cardsOperations, cardsSelectors } from "../../redux/";
 
-const Table = ({ cards }) => {
+export default function Table() {
+  const dispatch = useDispatch();
+
+  const cards = useSelector(cardsSelectors.getAllCards);
+  console.log(cards);
+
+  useEffect(() => {
+    dispatch(cardsOperations.fetchCards());
+  }, []);
+
   return (
     <div>
       <table className="table table-bordered">
@@ -28,6 +39,4 @@ const Table = ({ cards }) => {
       </table>
     </div>
   );
-};
-
-export default Table;
+}

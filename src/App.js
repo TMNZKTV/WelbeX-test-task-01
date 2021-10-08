@@ -4,9 +4,9 @@ import Title from "./components/title/Title";
 import Table from "./components/table/Table";
 import RadioButtons from "./components/radio-buttons/RadioButtons";
 import Filter from "./components/filter/Filter";
-import CardsService from "./api/CardsService";
+// import CardsService from "./api/CardsService";
 import Loader from "./components/UI/Loader/Loader";
-import { useFetching } from "./components/hooks/useFetching";
+// import { useFetching } from "./components/hooks/useFetching";
 import Pagination from "./components/pagination/Pagination";
 
 const App = () => {
@@ -17,14 +17,14 @@ const App = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [cardsPerPage] = useState(20);
 
-  const [fetchCards, isLoading, error] = useFetching(async () => {
-    const cards = await CardsService.getAll();
-    setCards(cards);
-  });
+  // const [fetchCards, isLoading, error] = useFetching(async () => {
+  //   const cards = await CardsService.getAll();
+  //   setCards(cards);
+  // });
 
-  useEffect(() => {
-    fetchCards();
-  }, []);
+  // useEffect(() => {
+  //   fetchCards();
+  // }, []);
 
   // // Получаем текущие карточки
   const lastCardIndex = currentPage * cardsPerPage;
@@ -53,11 +53,9 @@ const App = () => {
   return (
     <div className="container mt-5">
       <Title />
-
       <button type="button" onClick={(e) => setHidden(!hidden)}>
         Фильтровать +
       </button>
-
       {!hidden ? (
         <>
           <RadioButtons
@@ -69,21 +67,20 @@ const App = () => {
         </>
       ) : null}
 
-      {error && <h1>Произошла ошибка ${error}</h1>}
+      {/* {error && <h1>Произошла ошибка ${error}</h1>} */}
+      {/* {isLoading ? ( */}
 
-      {isLoading ? (
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            marginTop: "50px",
-          }}
-        >
-          <Loader />
-        </div>
-      ) : (
-        <Table cards={search(currentCards)} />
-      )}
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          marginTop: "50px",
+        }}
+      >
+        {/* <Loader /> */}
+      </div>
+
+      <Table />
 
       <Pagination
         cardsPerPage={cardsPerPage}
