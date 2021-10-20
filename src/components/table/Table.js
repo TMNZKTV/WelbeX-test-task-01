@@ -1,41 +1,45 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { cardsOperations, cardsSelectors } from "../../redux/";
+import { cardsOperations, cardsSelectors } from "../../redux/cards";
+import { pagesSelectors } from "../../redux/pages";
+import TableHead from "./TableHead";
+import TableBody from "./TableBody";
+import TableRow from "./TableRow";
 
 export default function Table() {
   const dispatch = useDispatch();
-
   const cards = useSelector(cardsSelectors.getAllCards);
-  console.log(cards);
+  const currentPage = useSelector(pagesSelectors.getPage);
+  const cardsPerPage = useSelector(cardsSelectors.getCardsPerPage);
+  const filter = useSelector(cardsSelectors.getFilter);
 
   useEffect(() => {
     dispatch(cardsOperations.fetchCards());
   }, []);
 
+  const lastCardIndex = currentPage * cardsPerPage;
+  const firstCardIndex = lastCardIndex - cardsPerPage;
+  const currentCards = cards.slice(firstCardIndex, lastCardIndex);
+
+  // Пока захардкодил поиск только по имени, т.к. метод toString() не может работать на undefined
+  const [searchColumns, setSearchColumns] = useState(["name"]);
+
+  function search(cards) {
+    return cards.filter((card) =>
+      searchColumns.some((column) =>
+        card[column].toString().toLowerCase().includes(filter.toLowerCase())
+      )
+    );
+  }
+
+  // Понять, что это такое и зачем это нужно О_о ?
+  // const columns = cards[0] && Object.keys(cards[0]);
+
   return (
     <div>
-      <table className="table table-bordered">
-        <thead>
-          <tr key="fixed">
-            <td className="w-25 h4">Date</td>
-            <td className="w-25 h4">Name</td>
-            <td className="w-25 h4">Amount</td>
-            <td className="w-25 h4">Distance</td>
-          </tr>
-        </thead>
-
-        {cards.map((card, idx) => {
-          return (
-            <tbody key={idx}>
-              <tr>
-                <td className="w-25">{card.date}</td>
-                <td className="w-25">{card.name}</td>
-                <td className="w-25">{card.amount}</td>
-                <td className="w-25">{card.distance}</td>
-              </tr>
-            </tbody>
-          );
-        })}
+      <table className="table table-bordered table-striped">
+        <TableHead />
+        <TableBody cards={search(currentCards)} />
       </table>
     </div>
   );

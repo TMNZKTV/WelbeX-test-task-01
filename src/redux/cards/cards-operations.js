@@ -12,4 +12,12 @@ const fetchCards = () => (dispatch) => {
     .catch((error) => console.log(error));
 };
 
-export default { fetchCards };
+const setFilter = (value) => (dispatch) => {
+  dispatch(cardsActions.setFilterRequest);
+
+  return dispatch(cardsActions.setFilterSuccess(value));
+};
+export default {
+  fetchCards,
+  setFilter,
+};

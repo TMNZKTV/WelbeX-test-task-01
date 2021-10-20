@@ -3,7 +3,7 @@ import styles from "./RadioButtons.module.css";
 const RadioButtons = ({ columns, searchColumns, setSearchColumns }) => {
   return (
     <div>
-      {columns.map((column) => {
+      {[].map((column) => {
         if (column !== "_id") {
           return (
             <label>

@@ -1,22 +1,20 @@
-import React, { useState } from "react";
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { cardsOperations, cardsSelectors } from "../../redux/cards";
 
-const Filter = ({ setSearchValue }) => {
-  const [inputValue, setInputValue] = useState("");
-
-  function sendSearchValue(e) {
-    setInputValue(e.target.value);
-    setSearchValue(e.target.value);
-  }
+const Filter = () => {
+  const dispatch = useDispatch();
+  const value = useSelector(cardsSelectors.getFilter);
 
   return (
     <div>
       <div>
         <input
-          className="form-control"
+          className="form-control mb-2"
           placeholder="Search here"
           type="text"
-          value={inputValue}
-          onChange={(e) => sendSearchValue(e)}
+          value={value}
+          onChange={(e) => dispatch(cardsOperations.setFilter(e.target.value))}
         />
       </div>
     </div>
